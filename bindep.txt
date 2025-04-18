@@ -11,6 +11,7 @@ cryptsetup
 libssh-dev
 python3-cryptography
 python3-openssl
+openssh-client [platform:dpkg]
 git
 jq
 rsync
