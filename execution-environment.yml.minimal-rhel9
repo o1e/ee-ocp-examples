@@ -1,0 +1,37 @@
+version: 3
+
+build_arg_defaults: 
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
+
+images: 
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
+    #name: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
+
+# Custom package manager path for the RHEL based images
+options: 
+  package_manager_path: /usr/bin/microdnf
+
+dependencies: 
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  exclude:
+    system:
+      - openshift-clients
+
+additional_build_files:
+  - src: include/sw-dl.sh
+    dest: include/
+
+additional_build_steps: 
+  prepend_base:
+    - COPY _build/include/ /tmp/
+    - RUN /tmp/sw-dl.sh
+
+  prepend_final: |
+    RUN whoami
+    RUN cat /etc/os-release
+  append_final:
+    - RUN echo This is a post-install command!
+    - RUN ls -la /etc
