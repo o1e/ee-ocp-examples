@@ -37,7 +37,7 @@ Targets:
   clean        remove ansible-builder context directory
   mrproper     clean + remove local images for this project
 
-Build   : make <variant>          (e.g.  make py-3.12)
+Build    : make <variant>          (e.g.  make py-3.12)
 Set image: make IMAGE=my-ee <var>  (e.g.  make IMAGE=test py-3.12)
 ```
 
