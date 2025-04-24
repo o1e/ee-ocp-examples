@@ -7,22 +7,26 @@ echo "Installing additional CLI tools ..."
 declare -A ARCHIVES=(
   [oc_tools]="https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz"
   [helm]="https://get.helm.sh/helm-v3.17.2-linux-amd64.tar.gz"
+  [vault]="https://releases.hashicorp.com/vault/1.15.5/vault_1.15.5_linux_amd64.zip"
+  [tekton]="https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-amd64.tar.gz"
 )
 
-# Which files to extract from each archive
+# Files to extract from each archive
 declare -A FILES_TO_EXTRACT=(
   [oc_tools]="oc kubectl"
   [helm]="linux-amd64/helm"
+  [vault]="vault"
+  [tekton]="tkn"
 )
 
-WORKDIR=$(mktemp -d)
+WORKDIR="$(mktemp -d)"
 echo "Working directory: $WORKDIR"
 
-# Download and extract each archive
 for name in "${!ARCHIVES[@]}"; do
   url="${ARCHIVES[$name]}"
   files="${FILES_TO_EXTRACT[$name]}"
-  archive_path="$WORKDIR/$name.tar.gz"
+  archive_path="$WORKDIR/${name}$(basename "$url" | sed 's/.*\(\.zip\|\.tar\.gz\)$//')"
+  archive_path="$WORKDIR/$name${url##*/}"
   extract_dir="$WORKDIR/$name"
 
   echo "Downloading $name from $url ..."
@@ -30,12 +34,22 @@ for name in "${!ARCHIVES[@]}"; do
 
   echo "Extracting $name ..."
   mkdir -p "$extract_dir"
-  tar -xzf "$archive_path" -C "$extract_dir"
+  case "$archive_path" in
+    *.zip)
+      unzip -q "$archive_path" -d "$extract_dir"
+      ;;
+    *.tar.gz)
+      tar -xzf "$archive_path" -C "$extract_dir"
+      ;;
+    *)
+      echo "Error: unsupported archive format for $archive_path"
+      exit 1
+      ;;
+  esac
 
-  # Install selected files to /usr/local/bin
   for file in $files; do
     src_path="$extract_dir/$file"
-    target_name=$(basename "$file")
+    target_name="$(basename "$file")"
     target_path="/usr/local/bin/$target_name"
 
     if [[ -f "$src_path" ]]; then

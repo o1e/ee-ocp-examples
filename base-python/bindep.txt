@@ -7,11 +7,9 @@
 # This is a cross-platform list tracking distribution packages needed by tests;
 # see https://docs.openstack.org/infra/bindep/ for additional information.
 
-cryptsetup
-libssh-dev
-python3-cryptography
-python3-openssl
-openssh-client [platform:dpkg]
+#libssh-dev
+#python3-cryptography
+#python3-openssl
 git
 jq
 rsync
@@ -19,17 +17,29 @@ unzip
 tar
 
 # Dependencies for pycurl and python-ldap
-libcurl-devel
-curl-devel
-openssl-devel
-openldap-devel
+#libcurl-devel
+#curl-devel
+#openssl-devel
+#openldap-devel
 
-# Dependency for supporting pip packages that need to be compiled
-python3-devel
-libldap2‑dev
-libssl‑dev
+# Debian/Ubuntu
+pkg-config [platform:dpkg]
+python3-dev [platform:dpkg]
+openssh-client [platform:dpkg]
+libvirt-dev [platform:dpkg]
+libvirt-clients [platform:dpkg]
+python3-libvirt [platform:dpkg]
+libxml2-dev [platform:dpkg]
+libxslt1-dev [platform:dpkg]
 
-#libvirt
+#libcurl4-openssl-dev   [platform:dpkg]
+#libssl-dev             [platform:dpkg]
+#libldap2-dev           [platform:dpkg]
+
+# RHEL/UBI/Fedora
+#libvirt-devel [platform:rpm]
+#pkgconf-pkg-config [platform:rpm]
+
 #libvirt-libs [platform:rpm]
 #libvirt-client [platform:rpm]
 #python3-libvirt [platform:rpm]

@@ -1,0 +1,36 @@
+version: 3
+
+images:
+  base_image:
+    name: quay.io/rockylinux/rockylinux:9
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
+
+options:
+  package_manager_path: /usr/bin/dnf
+
+additional_build_files:
+  - src: ../include/sw-dl.sh
+    dest: include/
+
+additional_build_steps:
+  prepend_base:
+    #- RUN dnf install -y epel-release python3 python3-pip git unzip
+    - RUN dnf install -y python3 python3-pip git unzip
+    - COPY _build/include/ /tmp/
+    - RUN /tmp/sw-dl.sh
+
+  prepend_final:
+    - RUN whoami
+    - RUN cat /etc/os-release
+  append_final:
+    - RUN ansible --version
+    - RUN python3 --version
+

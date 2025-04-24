@@ -45,7 +45,7 @@ Set image: make IMAGE=my-ee <var>  (e.g.  make IMAGE=test py-3.12)
 ```
 .
 ├── Makefile                     – build targets
-├── execution-environment.yml.*  – EE variants (py‑39, py3.12, rh‑…)
+├── execution-environment.yml.*  – EE variants (py‑3.9, py3.12, rh‑…)
 ├── requirements.{yml,txt}       – Galaxy & pip dependencies
 ├── bindep.txt                   – system packages (dpkg / rpm)
 └── include/sw-dl.sh             – oc, kubectl, helm …

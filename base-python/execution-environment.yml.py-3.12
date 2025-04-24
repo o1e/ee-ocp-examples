@@ -1,0 +1,44 @@
+version: 3
+
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: "--pre"
+
+options:
+  package_manager_path: /usr/bin/apt-get
+  skip_pip_install: true
+
+images:
+  base_image:
+    name: python:3.12-slim
+    #name: python:3.10
+
+dependencies:
+  ansible_core:
+    package_pip: ansible-core~=2.16.0
+    #package_pip: ansible-core==2.16.14
+  ansible_runner:
+    package_pip: ansible-runner
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  python_interpreter:
+    python_path: "/usr/local/bin/python3" 
+
+additional_build_files:
+  - src: ../include/sw-dl.sh
+    dest: include/
+
+additional_build_steps:
+  prepend_base:
+    - RUN apt-get update && apt-get install -y --no-install-recommends git curl unzip sudo
+    - RUN apt-get install -y --no-install-recommends build-essential git && pip install --upgrade pip setuptools wheel
+    # extra CLIs
+    - COPY _build/include/ /tmp/
+    - RUN /tmp/sw-dl.sh
+
+  append_final:
+    - RUN rm -f /tmp/sw-dl.sh /usr/bin/python*
+    - RUN ln -sf /usr/local/bin/python /usr/bin/python3
+    - RUN ansible --version
+    - RUN /usr/local/bin/python3 --version
+
