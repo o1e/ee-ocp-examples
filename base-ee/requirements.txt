@@ -1,0 +1,16 @@
+#The entry requirements.txt is a file that installs extra Python requirements on top of what the Collections already list as their Python dependencies.
+openshift
+kubernetes
+dnspython
+jsonpath
+jsonpatch
+pyyaml
+jmespath
+netaddr
+yamllint
+passlib
+oras
+ansible-lint
+Cython
+pyvmomi>=8.0.3.0.1
+

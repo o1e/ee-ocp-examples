@@ -7,7 +7,7 @@ echo "Installing additional CLI tools ..."
 declare -A ARCHIVES=(
   [oc_tools]="https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz"
   [helm]="https://get.helm.sh/helm-v3.19.4-linux-amd64.tar.gz"
-  [vault]="https://releases.hashicorp.com/vault/1.15.5/vault_1.21.1_linux_amd64.zip"
+  [vault]="https://releases.hashicorp.com/vault/1.21.1/vault_1.21.1_linux_amd64.zip"
   [tekton]="https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-amd64.tar.gz"
 )
 

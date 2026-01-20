@@ -1,0 +1,60 @@
+version: 3
+
+images:
+  base_image:
+    name: docker.io/redhat/ubi9:latest
+    #name: registry.access.redhat.com/ubi9/ubi-minimal:latest
+    #name: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  ansible_core:
+    package_pip: ansible-core
+#    package_pip: ansible-core~=2.17.0
+  ansible_runner:
+    package_pip: ansible-runner
+  exclude:
+    system:
+      - openshift-clients
+
+# Custom package manager path for the RHEL based images
+#options:
+#  package_manager_path: /usr/bin/microdnf
+
+additional_build_files:
+  - src: ./include/sw_dl.sh
+    dest: include/sw_dl.sh
+#  - src: ../bdop-include/yum.repos.d/
+#    dest: bdop-include/yum.repos.d/
+#  - src: ../bdop-include/pip.conf
+#    dest: bdop-include/pip.conf
+#  - src: ../bdop-include/ansible.cfg
+#    dest: bdop-include/ansible.cfg
+#  - src: ../bdop-include/certs/lin/
+#    dest: bdop-include/certs/
+#  - src: /etc/rhsm/ca/katello-server-ca.pem
+#    dest: bdop-include/certs/rhel/rhsm/ca/katello-server-ca.pem
+#  - src: /etc/pki/entitlement/
+#    dest: bdop-include/certs/rhel/entitlement/
+
+additional_build_steps:
+  prepend_base:
+    - RUN dnf install -y git unzip
+    # Script to download and install needed artifacts in container
+    - COPY _build/include/sw_dl.sh /tmp/
+    - RUN chmod +x /tmp/sw_dl.sh && /tmp/sw_dl.sh && rm -f /tmp/sw_dl.sh
+    - RUN dnf upgrade-minimal -y --security
+#    - RUN dnf install -y python3.11 python3.11-pip
+#    - RUN alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 10
+#    - RUN alternatives --install /usr/bin/pip3 pip3 /usr/bin/pip3.11 10
+    - RUN python3 --version
+#    - RUN python3 -m pip install --upgrade pip
+  append_final:
+    # https://github.com/hashicorp/vault/issues/10048
+#    - RUN setcap cap_ipc_lock= $(readlink -f /usr/bin/vault )
+#    - RUN /usr/bin/vault --version
+    - RUN ansible --version
+    - RUN python3 --version
+

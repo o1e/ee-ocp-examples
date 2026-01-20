@@ -2,12 +2,12 @@ version: 3
 
 images:
   base_image:
-    name: docker.io/library/almalinux:9
+    name: registry.access.redhat.com/ubi9/ubi:latest
 
 dependencies:
   galaxy: requirements.yml
   python: requirements.txt
-#  system: bindep.txt
+  system: bindep.txt
   ansible_core:
     package_pip: ansible-core
   ansible_runner:

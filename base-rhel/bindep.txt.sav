@@ -22,12 +22,7 @@ git
 unzip
 jq
 rsync
-file
-which
 tar
-sshpass
-bind-utils
-httpd-tools
 
 # Dependencies for pycurl and python-ldap
 #libcurl-devel

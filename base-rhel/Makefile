@@ -6,32 +6,20 @@ EE_BASE      := execution-environment.yml
 EE_FILES     := $(wildcard execution-environment.yml.*)
 EE_SUFFIXES  := $(patsubst execution-environment.yml.%,%,$(EE_FILES))
 
-# any other flags you want to hand to ansible-builder
 BUILDER_OPTS ?=
 
-# --------------------------------------------------------------------
 .PHONY: help default list clean mrproper $(EE_SUFFIXES)
+
 # --------------------------------------------------------------------
 help: ## show all targets and usage examples
-	@echo "Usage: make <target> [BUILDER_OPTS='…']"
-	@echo
-	@echo "Variants: (e.g.  make rocky9)"; for ee in $(EE_SUFFIXES); do echo "  - $$ee"; done
-	@echo
-	@echo "Targets:"
-	@echo "  default     :build EE from execution-environment.yml"
-	@echo "  help        :show all targets and usage examples"
-	@echo "  list        :list available variants"
-	@echo "  clean       :remove ansible-builder context directory"
-	@echo "  mrproper    :clean + remove local images for this project"
-	@echo "  " 
-	@echo "Examples:"
-	@echo "  make list"
-	@echo "  make rocky9"
-	@echo "  make IMAGE=my-ee rocky9"
-	@echo "  make rocky9 BUILDER_OPTS='-v3 --prune-images --pull'"
-	@echo "  make IMAGE=my-ee rocky9 BUILDER_OPTS='--pull --no-cache'"j
-	@echo "  make rocky9 # basic build"
-	@echo "  make rocky9 BUILDER_OPTS='--prune-images --pull'"
+	@awk 'BEGIN{FS=":.*## "; \
+	            print "\nUsage  : make <target>\n"; \
+	            print "Targets:"} \
+	     /^[a-zA-Z0-9_-]+:.*## /{printf "  %-12s %s\n", $$1, $$2}' \
+	     $(MAKEFILE_LIST); \
+	echo ""; \
+	echo "Build   : make <variant>          (e.g.  make py-3.12)"; \
+	echo "Set image: make IMAGE=my-ee <var>  (e.g.  make IMAGE=test py-3.12)"
 
 # --------------------------------------------------------------------
 default: ## build EE from execution-environment.yml
