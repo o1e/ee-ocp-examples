@@ -34,13 +34,35 @@ additional_build_files:
     dest: include/sw_dl.sh
 
 additional_build_steps:
+  prepend: |
+    RUN rm -rf /var/lib/apt/lists/*
+
+  prepend_galaxy: |
+    RUN rm -rf /var/lib/apt/lists/*
+
+  prepend_final: |
+    RUN rm -rf /var/lib/apt/lists/*
+
+  append_final: |
+    RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+
+additional_build_steps:
   prepend_base:
-    - RUN apt-get update && apt-get install -y --no-install-recommends git unzip curl ca-certificates 
+    - RUN rm -rf /var/lib/apt/lists/*
+    - RUN apt-get update && apt-get install -y --no-install-recommends git unzip curl ca-certificates
     - COPY _build/include/sw_dl.sh /tmp/
     - RUN chmod +x /tmp/sw_dl.sh && /tmp/sw_dl.sh && rm -f /tmp/sw_dl.sh
+    - RUN rm -rf /var/lib/apt/lists/*
+
+  # ensures fresh apt lists before galaxy/assemble stages (where bindep installs often happen)
+  prepend_galaxy:
+    - RUN rm -rf /var/lib/apt/lists/*
+    - RUN apt-get update
+  prepend_final:
+    - RUN rm -rf /var/lib/apt/lists/*
+    - RUN apt-get update
 
   append_final:
     - RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     - RUN ansible --version
     - RUN python3 --version
-
