@@ -1,0 +1,59 @@
+# pkg-config
+pkgconf-pkg-config [platform:rpm]
+pkg-config [platform:dpkg]
+
+# ssh client
+openssh-clients [platform:rpm]
+openssh-client [platform:dpkg]
+
+# compiler / build chain
+gcc [platform:rpm]
+gcc [platform:dpkg]
+# (optional für Debian oft sinnvoll)
+build-essential [platform:dpkg]
+
+# Python headers
+python3-devel [platform:rpm]
+python3-dev [platform:dpkg]
+
+# Kerberos
+krb5-devel [platform:rpm]
+libkrb5-dev [platform:dpkg]
+krb5-libs [platform:rpm]
+# (Debian: runtime libs kommen meist automatisch; optional explizit)
+libkrb5-3 [platform:dpkg]
+krb5-workstation [platform:rpm]
+krb5-user [platform:dpkg]
+
+# tools
+rsync [platform:rpm]
+rsync [platform:dpkg]
+git [platform:rpm]
+git [platform:dpkg]
+unzip [platform:rpm]
+unzip [platform:dpkg]
+jq [platform:rpm]
+jq [platform:dpkg]
+tar [platform:rpm]
+tar [platform:dpkg]
+file [platform:rpm]
+file [platform:dpkg]
+which [platform:rpm]
+which [platform:dpkg]
+
+# vault/ssh helpers
+sshpass [platform:rpm]
+sshpass [platform:dpkg]
+
+# LDAP dev headers
+openldap-devel [platform:rpm]
+libldap2-dev [platform:dpkg]
+
+# DNS utils
+bind-utils [platform:rpm]
+dnsutils [platform:dpkg]
+
+# httpd tools
+httpd-tools [platform:rpm]
+apache2-utils [platform:dpkg]
+
