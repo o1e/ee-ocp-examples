@@ -57,3 +57,20 @@ dnsutils [platform:dpkg]
 httpd-tools [platform:rpm]
 apache2-utils [platform:dpkg]
 
+# libvirt client/runtime + dev headers (needed for libvirt-python build)
+libvirt-devel [platform:rpm]
+libvirt-dev [platform:dpkg]
+
+# libvirt client tools (virsh etc.)
+libvirt-clients [platform:dpkg]
+libvirt-client [platform:rpm]
+
+# common XML libs (lxml wheels/build can need these)
+libxml2-dev [platform:dpkg]
+libxslt1-dev [platform:dpkg]
+libxml2-devel [platform:rpm]
+libxslt-devel [platform:rpm]
+
+# SASL (für manche libvirt auth/transport cases, schadet nicht)
+libsasl2-dev [platform:dpkg]
+cyrus-sasl-devel [platform:rpm]

@@ -34,7 +34,7 @@ CONTEXT_DIR := context
 .PHONY: help default build rebuild test run shell clean mrproper show
 
 # --------------------------------------------------------------------
-help: ## show all targets
+help: ## show all targets and debugging examples
 	@awk 'BEGIN{FS=":.*## "; \
 	            print "\nUsage  : make <target>\n"; \
 	            print "Targets:"} \
@@ -42,10 +42,23 @@ help: ## show all targets
 	     $(MAKEFILE_LIST); \
 	echo ""; \
 	echo "Examples:"; \
-	echo "  make IMAGE=ee-ocp-libvirt build"; \
-	echo "  make ENGINE=docker rebuild"; \
-	echo "  make test"; \
-	echo "  make run"
+	echo "  Build EE:"; \
+	echo "    make"; \
+	echo "    make build"; \
+	echo ""; \
+	echo "  Debug build (ansible-builder verbose):"; \
+	echo "    make BUILDER_OPTS='-v' build"; \
+	echo "    make BUILDER_OPTS='-vvv' build"; \
+	echo ""; \
+	echo "  Debug without cache:"; \
+	echo "    make BUILDER_OPTS='-vvv' rebuild"; \
+	echo ""; \
+	echo "  Debug container runtime:"; \
+	echo "    make run"; \
+	echo "    make test"; \
+	echo ""; \
+	echo "  Change image name:"; \
+	echo "    make IMAGE=ee-ocp4 build"
 
 default: build ## build EE (default)
 
