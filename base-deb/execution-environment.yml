@@ -54,11 +54,12 @@ additional_build_steps:
     - RUN chmod +x /tmp/sw_dl.sh && /tmp/sw_dl.sh && rm -f /tmp/sw_dl.sh
     - RUN rm -rf /var/lib/apt/lists/*
 
-  # ensures fresh apt lists before galaxy/assemble stages (where bindep installs often happen)
   prepend_galaxy:
     - RUN rm -rf /var/lib/apt/lists/*
     - RUN apt-get update
-  prepend_final:
+
+  # THIS is the missing part: assemble runs in the builder stage
+  prepend_builder:
     - RUN rm -rf /var/lib/apt/lists/*
     - RUN apt-get update
 
