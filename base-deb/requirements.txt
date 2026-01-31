@@ -13,4 +13,4 @@ oras
 ansible-lint
 Cython
 pyvmomi>=8.0.3.0.1
-
+libvirt-python
