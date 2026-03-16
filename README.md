@@ -71,21 +71,6 @@ cd stable/default
 make build
 ```
 
-### Run with ansible-navigator
-
-```bash
-ansible-navigator run playbook.yml -m stdout
-```
-
-### Run with Podman (example)
-
-```bash
-podman run -it --rm \
-  -v $PWD:/workspace \
-  -w /workspace \
-  localhost/ee-ocp:latest bash
-```
-
 ---
 
 ## Design Philosophy
