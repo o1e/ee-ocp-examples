@@ -1,0 +1,48 @@
+version: 3
+
+images:
+  base_image:
+    name: docker.io/library/almalinux:9
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  ansible_core:
+    package_pip: ansible-core
+    # package_pip: ansible-core~=2.17.0
+  ansible_runner:
+    package_pip: ansible-runner
+  exclude:
+    system:
+      - openshift-clients
+options:
+  package_manager_path: /usr/bin/dnf
+
+additional_build_files:
+  - src: ../../include/sw_dl.sh
+    dest: include/sw_dl.sh
+
+additional_build_steps:
+  # Base stage: only install what you truly need early (git/curl/unzip + CA),
+  # then cleanup dnf caches to keep the image small.
+  prepend_base:
+    - RUN dnf install -y dnf-plugins-core
+    - RUN dnf config-manager --set-enabled crb
+    - RUN dnf -y makecache
+    - RUN dnf -y --allowerasing install git unzip curl ca-certificates && dnf -y clean all && rm -rf /var/cache/dnf
+    - COPY _build/include/sw_dl.sh /tmp/
+    - RUN chmod +x /tmp/sw_dl.sh && /tmp/sw_dl.sh && rm -f /tmp/sw_dl.sh
+  # Builder stage: ensure metadata exists before assemble/bindep installs system deps
+  prepend_builder:
+    - RUN dnf -y makecache
+  # Final stage: ensure metadata exists before install-from-bindep runs dnf install
+  prepend_final:
+    - RUN dnf -y makecache
+
+  # Final cleanup + basic visibility
+  append_final:
+    - RUN dnf -y clean all && rm -rf /var/cache/dnf /tmp/* /var/tmp/*
+    - RUN ansible --version
+    - RUN python3 --version
+

@@ -1,0 +1,34 @@
+version: 3
+
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+  exclude:
+    system:
+      - openshift-clients
+
+# Custom package manager path for the RHEL based images
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_files:
+  - src: ../../include/sw_dl.sh
+    dest: include/sw_dl.sh
+
+additional_build_steps:
+  prepend_base:
+    - COPY _build/include/sw_dl.sh /tmp/
+    - RUN chmod +x /tmp/sw_dl.sh && /tmp/sw_dl.sh && rm -f /tmp/sw_dl.sh
+
+  prepend_final:
+    - RUN whoami
+    - RUN cat /etc/os-release
+  append_final:
+    - RUN ansible --version
+    - RUN python3 --version
+
