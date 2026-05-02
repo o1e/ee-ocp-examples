@@ -128,11 +128,16 @@ All other tooling is installed via pip.
 ### Install Podman
 
 Debian / Ubuntu:
+```
 sudo apt-get update
 sudo apt-get install -y podman python3 python3-venv
+```
 
 RHEL / Fedora:
+
+```
 sudo dnf install -y podman python3 python3-venv
+```
 
 ---
 
@@ -140,13 +145,17 @@ sudo dnf install -y podman python3 python3-venv
 
 Create and activate a virtual environment:
 
+```
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
 Install build tooling:
 
+```
 pip install --upgrade pip
 pip install ansible-builder ansible-navigator
+```
 
 ---
 
@@ -154,23 +163,33 @@ pip install ansible-builder ansible-navigator
 
 Build the default image (ee-ocp4:latest):
 
+```
 make
+```
 
 Rebuild without cache:
 
+```
 make rebuild
+```
 
 Open a shell inside the EE (debugging):
 
+```
 make run
+```
 
 Run basic sanity checks inside the EE:
 
+```
 make test
+```
 
 Change image name:
 
+```
 make IMAGE=ee-ocp4 build
+```
 
 ---
 
@@ -178,9 +197,11 @@ make IMAGE=ee-ocp4 build
 
 Example:
 
+```
 ansible-navigator run site.yml \
   --execution-environment-image ee-ocp4:latest \
   --mode stdout
+```
 
 Important note about delegate_to: localhost
 
@@ -212,7 +233,9 @@ KVM / libvirt via qemu+ssh:
 - the EE acts as the libvirt client
 - verify non-interactive access first:
 
+```
 virsh -c qemu+ssh://USER@HOST/system list --all
+```
 
 ---
 
