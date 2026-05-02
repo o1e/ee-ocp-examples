@@ -31,6 +31,7 @@ It is not limited to libvirt – libvirt is just one part of the toolchain.
 
 ## Repository layout
 
+```
 .
 ├── Makefile
 │   └── build / test / run helpers
@@ -46,7 +47,7 @@ It is not limited to libvirt – libvirt is just one part of the toolchain.
 │   └── sw_dl.sh
 │       └── optional: oc / kubectl / helm download helper
 └── README.md
-
+``
 ---
 
 ## Dependency model
