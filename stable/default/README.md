@@ -173,18 +173,6 @@ Rebuild without cache:
 make rebuild
 ```
 
-Open a shell inside the EE (debugging):
-
-```
-make run
-```
-
-Run basic sanity checks inside the EE:
-
-```
-make test
-```
-
 Change image name:
 
 ```
