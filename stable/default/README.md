@@ -81,8 +81,10 @@ This EE is built to support automation around:
   - community.crypto
 - KVM / libvirt
   - community.libvirt
+- Container image management
+  - containers.podman
 
-Optional collections (Vault, VMware, Podman, OCI, etc.) can be enabled
+Optional collections (Vault, VMware, OCI, etc.) can be enabled
 by uncommenting them in requirements.yml.
 
 ---
@@ -93,6 +95,7 @@ Python libraries required by Ansible modules and collections, e.g.:
 
 - lxml
 - libvirt-python
+- pycdlib
 - crypto / API helpers as required by the project
 
 If Ansible fails with:
@@ -112,6 +115,9 @@ System packages for both dpkg and rpm platforms, including:
 - LDAP development headers
 - Common utilities (rsync, git, jq, tar, file, which, dnsutils, etc.)
 - KVM / libvirt client and development libraries
+- Podman and Skopeo for image pull, inspection, save, and load operations
+- qemu-img for qcow2 image inspection and manipulation
+- cloud-localds for creating NoCloud cloud-init seed media
 
 This enables:
 - building Python extensions during image build

@@ -69,6 +69,17 @@ virt-install [platform:rpm]
 osinfo-db [platform:dpkg]
 uuid-runtime [platform:dpkg]
 
+# container image management
+podman [platform:rpm]
+podman [platform:dpkg]
+skopeo [platform:rpm]
+skopeo [platform:dpkg]
+
+# qcow2 image inspection and manipulation
+qemu-img [platform:rpm]
+qemu-utils [platform:dpkg]
+cloud-image-utils [platform:dpkg]
+
 # common XML libs (lxml wheels/build can need these)
 libxml2-dev [platform:dpkg]
 libxslt1-dev [platform:dpkg]
