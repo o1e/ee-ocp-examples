@@ -46,5 +46,6 @@ additional_build_steps:
   # Final cleanup + basic visibility
   append_final:
     - RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    - RUN test "$(python3 -c 'import sys; print(sys.executable)')" = "/usr/local/bin/python3"
     - RUN ansible --version
     - RUN python3 --version

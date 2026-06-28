@@ -43,6 +43,7 @@ additional_build_steps:
   # Final cleanup + basic visibility
   append_final:
     - RUN dnf -y clean all && rm -rf /var/cache/dnf /tmp/* /var/tmp/*
+    - RUN virt-install --version
+    - RUN virsh --version
     - RUN ansible --version
     - RUN python3 --version
-

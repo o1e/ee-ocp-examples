@@ -109,6 +109,17 @@ make
 
 These are managed via bindep.txt.
 
+These variants intentionally use upstream `python:*` images and
+`/usr/local/bin/python3`. They are useful for checking Ansible and collection
+behavior against specific Python runtimes.
+
+They are not the recommended images for workflows that execute Python-based
+tools installed from the operating-system package manager, such as Debian's
+`virt-install`. Those tools often use `#!/usr/bin/env python3`; in a `python:*`
+image that resolves to `/usr/local/bin/python3`, while OS Python modules are
+installed for `/usr/bin/python3`. Use `stable/default` for libvirt-heavy
+automation that needs packaged CLI tools.
+
 ---
 
 ## Requirements

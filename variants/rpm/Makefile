@@ -5,7 +5,7 @@ BUILDER_OPTS ?=
 EE_FILES := $(sort $(wildcard execution-environment.yml.*))
 VARIANTS := $(patsubst execution-environment.yml.%,%,$(EE_FILES))
 
-.PHONY: help all build rebuild debug create clean print-vars $(VARIANTS)
+.PHONY: help all build rebuild debug create clean print-vars smoke $(VARIANTS)
 
 help: ## Show help and debugging examples
 	@echo ""
@@ -24,6 +24,7 @@ help: ## Show help and debugging examples
 	@echo "  rebuild     Build selected variant without cache"
 	@echo "  debug       Build selected variant with verbose output (-vvv)"
 	@echo "  create      Create build context for selected variant only"
+	@echo "  smoke       Run libvirt runtime checks for selected variant"
 	@echo "  print-vars  Show resolved variables"
 	@echo "  clean       Remove local build context"
 	@echo ""
@@ -37,6 +38,7 @@ help: ## Show help and debugging examples
 	@echo "  make ubi9"
 	@echo "  make rhel9-min"
 	@echo "  make build VARIANT=alma9"
+	@echo "  make smoke VARIANT=alma9"
 	@echo "  make centos BUILDER_OPTS='-vvv'"
 	@echo "  make all BUILDER_OPTS='-vvv'"
 
@@ -75,6 +77,15 @@ create: ## Create build context for selected variant only
 		exit 1; \
 	fi
 	$(BUILDER) create -f execution-environment.yml.$(VARIANT)
+
+smoke: ## Run libvirt runtime checks for selected variant
+	@if [ -z "$(VARIANT)" ]; then \
+		echo "Error: no VARIANT specified. Use 'make smoke VARIANT=<name>'."; \
+		exit 1; \
+	fi
+	podman run --rm $(IMAGE):$(VARIANT) virt-install --version
+	podman run --rm $(IMAGE):$(VARIANT) virsh --version
+	podman run --rm $(IMAGE):$(VARIANT) ansible --version
 
 clean: ## Remove local build context
 	rm -rf context

@@ -5,7 +5,7 @@ BUILDER_OPTS ?=
 EE_FILES := $(sort $(wildcard execution-environment.yml.*))
 VARIANTS := $(patsubst execution-environment.yml.%,%,$(EE_FILES))
 
-.PHONY: help all build rebuild debug create clean print-vars $(VARIANTS)
+.PHONY: help all build rebuild debug create clean print-vars smoke $(VARIANTS)
 
 help: ## Show help and debugging examples
 	@echo ""
@@ -24,6 +24,7 @@ help: ## Show help and debugging examples
 	@echo "  rebuild     Build selected variant without cache"
 	@echo "  debug       Build selected variant with verbose output (-vvv)"
 	@echo "  create      Create build context for selected variant only"
+	@echo "  smoke       Run Python-runtime smoke checks for selected variant"
 	@echo "  print-vars  Show resolved variables"
 	@echo "  clean       Remove local build context"
 	@echo ""
@@ -35,6 +36,7 @@ help: ## Show help and debugging examples
 	@echo "Examples:"
 	@echo "  make py-3.10"
 	@echo "  make build VARIANT=py-3.12"
+	@echo "  make smoke VARIANT=py-3.12"
 	@echo "  make py-3.9 BUILDER_OPTS='-vvv'"
 	@echo "  make all BUILDER_OPTS='-vvv'"
 
@@ -73,6 +75,14 @@ create: ## Create build context for selected variant only
 		exit 1; \
 	fi
 	$(BUILDER) create -f execution-environment.yml.$(VARIANT)
+
+smoke: ## Run Python-runtime smoke checks for selected variant
+	@if [ -z "$(VARIANT)" ]; then \
+		echo "Error: no VARIANT specified. Use 'make smoke VARIANT=<name>'."; \
+		exit 1; \
+	fi
+	podman run --rm $(IMAGE):$(VARIANT) python3 -c 'import sys; assert sys.executable == "/usr/local/bin/python3", sys.executable'
+	podman run --rm $(IMAGE):$(VARIANT) ansible --version
 
 clean: ## Remove local build context
 	rm -rf context

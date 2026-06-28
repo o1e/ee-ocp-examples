@@ -124,6 +124,20 @@ Additional runtime tools such as virsh or virt-install are included only in vari
 
 These dependencies are managed via bindep.txt.
 
+RPM variants use distribution system Python together with distribution
+packages. That avoids the `/usr/local/bin/python3` versus system-package Python
+split that can affect upstream `python:*` images.
+
+For libvirt workflows, validate the built image with:
+
+```
+make smoke VARIANT=alma9
+```
+
+Minimal RHEL supported images may not include the same libvirt CLI package set
+as the community RPM variants; use the smoke target to verify the selected
+variant.
+
 ---
 
 ## Requirements
