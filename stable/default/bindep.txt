@@ -1,24 +1,24 @@
 # pkg-config
-pkgconf-pkg-config [platform:rpm]
-pkg-config [platform:dpkg]
+pkgconf-pkg-config [compile platform:rpm]
+pkg-config [compile platform:dpkg]
 
 # ssh client
 openssh-clients [platform:rpm]
 openssh-client [platform:dpkg]
 
 # compiler / build chain
-gcc [platform:rpm]
-gcc [platform:dpkg]
+gcc [compile platform:rpm]
+gcc [compile platform:dpkg]
 # (optional für Debian oft sinnvoll)
-build-essential [platform:dpkg]
+build-essential [compile platform:dpkg]
 
 # Python headers
-python3-devel [platform:rpm]
-python3-dev [platform:dpkg]
+python3-devel [compile platform:rpm]
+python3-dev [compile platform:dpkg]
 
 # Kerberos
-krb5-devel [platform:rpm]
-libkrb5-dev [platform:dpkg]
+krb5-devel [compile platform:rpm]
+libkrb5-dev [compile platform:dpkg]
 krb5-libs [platform:rpm]
 # (Debian: runtime libs)
 libkrb5-3 [platform:dpkg]
@@ -46,8 +46,8 @@ sshpass [platform:rpm]
 sshpass [platform:dpkg]
 
 # LDAP dev headers
-openldap-devel [platform:rpm]
-libldap2-dev [platform:dpkg]
+openldap-devel [compile platform:rpm]
+libldap2-dev [compile platform:dpkg]
 
 # DNS utils
 bind-utils [platform:rpm]
@@ -58,8 +58,8 @@ httpd-tools [platform:rpm]
 apache2-utils [platform:dpkg]
 
 # libvirt client/runtime + dev headers (needed for libvirt-python build)
-libvirt-devel [platform:rpm]
-libvirt-dev [platform:dpkg]
+libvirt-devel [compile platform:rpm]
+libvirt-dev [compile platform:dpkg]
 
 # libvirt client tools (virsh etc.)
 libvirt-clients [platform:dpkg]
@@ -81,11 +81,11 @@ qemu-utils [platform:dpkg]
 cloud-image-utils [platform:dpkg]
 
 # common XML libs (lxml wheels/build can need these)
-libxml2-dev [platform:dpkg]
-libxslt1-dev [platform:dpkg]
-libxml2-devel [platform:rpm]
-libxslt-devel [platform:rpm]
+libxml2-dev [compile platform:dpkg]
+libxslt1-dev [compile platform:dpkg]
+libxml2-devel [compile platform:rpm]
+libxslt-devel [compile platform:rpm]
 
 # SASL (libvirt auth/transport cases)
-libsasl2-dev [platform:dpkg]
-cyrus-sasl-devel [platform:rpm]
+libsasl2-dev [compile platform:dpkg]
+cyrus-sasl-devel [compile platform:rpm]

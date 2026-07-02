@@ -29,7 +29,7 @@ declare -A ARCHIVES=(
 
 # Files to extract from each archive
 declare -A FILES_TO_EXTRACT=(
-  [oc_tools]="oc kubectl"
+  [oc_tools]="oc"
   [helm]="linux-amd64/helm"
   [tekton]="tkn"
 )
@@ -77,8 +77,10 @@ for name in "${!ARCHIVES[@]}"; do
   done
 done
 
+echo "Linking kubectl to oc ..."
+ln -sfn /usr/local/bin/oc /usr/local/bin/kubectl
+
 echo "Cleaning up temporary files ..."
 rm -rf "$WORKDIR"
 
 echo "Tool installation complete."
-
