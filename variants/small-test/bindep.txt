@@ -1,0 +1,33 @@
+# Build-only dependencies for pip packages with native extensions.
+pkg-config [compile platform:dpkg]
+gcc [compile platform:dpkg]
+build-essential [compile platform:dpkg]
+libkrb5-dev [compile platform:dpkg]
+libldap2-dev [compile platform:dpkg]
+libvirt-dev [compile platform:dpkg]
+libxml2-dev [compile platform:dpkg]
+libxslt1-dev [compile platform:dpkg]
+libsasl2-dev [compile platform:dpkg]
+
+# Runtime SSH and common automation tools.
+openssh-client [platform:dpkg]
+rsync [platform:dpkg]
+git [platform:dpkg]
+jq [platform:dpkg]
+tar [platform:dpkg]
+file [platform:dpkg]
+sshpass [platform:dpkg]
+dnsutils [platform:dpkg]
+apache2-utils [platform:dpkg]
+
+# Runtime auth libraries and tools.
+libkrb5-3 [platform:dpkg]
+krb5-user [platform:dpkg]
+
+# libvirt/KVM provisioning runtime.
+libvirt-clients [platform:dpkg]
+virtinst [platform:dpkg]
+osinfo-db [platform:dpkg]
+uuid-runtime [platform:dpkg]
+qemu-utils [platform:dpkg]
+cloud-image-utils [platform:dpkg]

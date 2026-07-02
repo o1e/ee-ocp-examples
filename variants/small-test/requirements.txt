@@ -1,0 +1,17 @@
+# Python dependencies required by the EE runtime.
+openshift
+kubernetes
+dnspython
+jsonpath
+jsonpatch
+pyyaml
+jmespath
+netaddr
+yamllint
+# passlib 1.7.4 is incompatible with bcrypt 5.x
+passlib==1.7.4
+bcrypt<5
+oras
+libvirt-python
+lxml
+pycdlib
