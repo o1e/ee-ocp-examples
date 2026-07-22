@@ -1,4 +1,4 @@
-IMAGE ?= ee-ocp
+IMAGE ?= ee-ocp4
 TAG ?= latest
 EE_FILE ?= execution-environment.yml
 BUILDER ?= ansible-builder
@@ -35,7 +35,7 @@ help:
 	@echo ""
 	@echo "Examples:"
 	@echo "  make build"
-	@echo "  make build IMAGE=ee-ocp TAG=dev"
+	@echo "  make build IMAGE=ee-ocp4 TAG=dev"
 	@echo "  make rebuild BUILDER_OPTS='-v'"
 	@echo "  make debug"
 	@echo "  make build BUILDER_OPTS='-vvv'"
