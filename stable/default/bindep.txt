@@ -79,6 +79,9 @@ skopeo [platform:dpkg]
 qemu-img [platform:rpm]
 qemu-utils [platform:dpkg]
 cloud-image-utils [platform:dpkg]
+dosfstools [platform:dpkg]
+mtools [platform:dpkg]
+
 
 # common XML libs (lxml wheels/build can need these)
 libxml2-dev [compile platform:dpkg]
